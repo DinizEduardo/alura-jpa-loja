@@ -3,6 +3,8 @@ package br.com.alura.loja.modelo;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
@@ -16,6 +18,14 @@ public class Pedido {
     @ManyToOne
     private Cliente cliente;
 
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens = new ArrayList<>();
+
+
+    public void adicionarItem(ItemPedido itemPedido) {
+        itemPedido.setPedido(this);
+        this.itens.add(itemPedido);
+    }
     public Pedido(Cliente cliente) {
         this.cliente = cliente;
     }
